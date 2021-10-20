@@ -1,30 +1,77 @@
 <template>
   <div id="placeorder">
     <button @click="callApi">Validate Token</button>
-    <p>{{ apiMessage }}</p>
-    <p>{{ apiMessage1 }}</p>
+    <p>{{apiMessage}}</p>    
+  </div>
+  <div id="ordering" v-if="validated">
+    <button @click="orderApi">PlaceOrder</button>
+    <p>{{apiOrderMessage}}</p>  
   </div>
 </template>
 
 <script>
 import axios from "axios";
-import {onMounted} from "vue";
 import router from '@/router';
 import { useRoute } from 'vue-router'
-
+import {ref} from "vue";
 
 export default {
-  name: "placeorder",  
-  data()
-  {
-    return {apiMessage : "Token Not Validated"};
-  },
+  name: "placeorder", 
   setup()
+  {
+    const apiMessage = ref("Token Not Validated");
+    const apiOrderMessage = ref("");
+    const validated = ref(false);
+    const callApi = () =>{
+         var token = sessionStorage.tokenDetails;
+          // Use Axios to make a call to the API
+          axios.get("/api/external", {
+          headers: {
+          Authorization: `Bearer ${token}`    // send the access token through the 'Authorization' header
+          }
+          }).then(function(data){ 
+           apiMessage.value = "";           
+           apiMessage.value = data.data.msg; 
+           if(data.data.msg.indexOf("successfully validated") > 0)
+           {
+             validated.value = true;
+           }                                   
+          });
+    }
+
+    const orderApi = () =>{
+      var token = sessionStorage.tokenDetails;
+
+      var orderDetails = { 
+  'PizzaType': "Crust",
+  'Topping': "Tomato, Onion, Bell Peppers, Green Pepper, Cheese",
+  'Cheese': "Light Cheese"
+};
+
+       var headers = {
+         headers:{
+          Authorization: `Bearer ${token}`,// send the access token through the 'Authorization' header          
+          EmailVerified: true,
+          User: sessionStorage.user
+          }};
+
+          // Use Axios to make a call to the API
+          axios.post("/api/order",orderDetails, headers).then(function(data){ 
+           apiOrderMessage.value = "";           
+           apiOrderMessage.value = data.data.msg; 
+           if(data.data.msg == "Enable your email address")
+           {
+             apiOrderMessage.value = "Please confirm email before ordering";
+           }                                   
+          });
+    }
+    return {apiMessage, callApi,apiOrderMessage, validated, orderApi };
+  },
+  mounted()
   {
      
      var token = null;
-     var isauthenticated = false;
-     var apiMessage1 = "";
+     var isauthenticated = false;     
      
      if(sessionStorage)
      {
@@ -32,9 +79,7 @@ export default {
      }
      console.log("placeorder");
      console.log(isauthenticated);
-     onMounted(() => {           
-           
-           isauthenticated = sessionStorage.isauthenticated;
+     isauthenticated = sessionStorage.isauthenticated;
            if(sessionStorage)
            {
                token = sessionStorage.tokenDetails;
@@ -46,26 +91,7 @@ export default {
                      console.log(router);
                      router.push(router.getRoutes()[0]);
            }
-           console.log("test");          
-          
-         
-          
-      });
-
-        function callApi(){
-          var token = sessionStorage.tokenDetails;
-          // Use Axios to make a call to the API
-          axios.get("/api/external", {
-          headers: {
-          Authorization: `Bearer ${token}`    // send the access token through the 'Authorization' header
-          }
-          }).then(function(data){ 
-           apiMessage1 = "";           
-           apiMessage1 = data.data.msg;                         
-          });
-       };
-
-    return {callApi, apiMessage1};
+           console.log("test");  
   },
   
  

@@ -57,13 +57,15 @@ export default {
         {
           console.log("redirected");
           store.commit('updateauthenticated',authtest._component.isAuthenticated);
-          store.commit('updateuser',authtest._component.user);
+          store.commit('updateuser',authtest._component.user);         
           console.log(store.state.isauthenticated);
           isAuthenticated = store.state.isauthenticated;
           if(sessionStorage)
           {
-            sessionStorage.isauthenticated = isAuthenticated;            
-          }                   
+            sessionStorage.isauthenticated = isAuthenticated; 
+            sessionStorage.user =  authtest._component.user.sub; 
+            sessionStorage.emailverified = authtest._component.user.email_verified;         
+          }
         }
         else
         {

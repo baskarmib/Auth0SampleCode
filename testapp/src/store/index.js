@@ -13,7 +13,7 @@ export default createStore({
     },
     updateuser(state,value)
     {
-      console.log("Update user in store");
+      console.log("Update user in store");      
       state.user = value;
     }
   },
