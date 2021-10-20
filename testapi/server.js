@@ -42,7 +42,7 @@ app.post("/api/order",checkJwt, (req, res) => {
     var emailverified = req.headers.emailverified;
     var user = req.headers.user;
     var authorizationHeader = req.headers.authorization;
-    if(emailverified)
+    if(emailverified == "true")
     {
       var axios = require("axios").default;
       var headers = {headers:{Authorization: authorizationHeader}};
