@@ -51,7 +51,7 @@ export default {
        var headers = {
          headers:{
           Authorization: `Bearer ${token}`,// send the access token through the 'Authorization' header          
-          EmailVerified: true,
+          EmailVerified: sessionStorage.emailverified,
           User: sessionStorage.user
           }};
 

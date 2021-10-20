@@ -59,7 +59,7 @@ app.post("/api/order",checkJwt, (req, res) => {
       };
       
       axios.post(authConfig.tokenapi,options.data,headers).then(function (response) {
-        console.log(response.data);
+        //console.log(response.data);
         var orderId = new Date()+"232";
         var token = response.data.access_token;
         var headers = {headers:{Authorization: `Bearer ${token}`}};
