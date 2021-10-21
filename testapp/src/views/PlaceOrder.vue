@@ -22,10 +22,11 @@ export default {
     const apiMessage = ref("Token Not Validated");
     const apiOrderMessage = ref("");
     const validated = ref(false);
+    var url = process.env.VUE_APP_API_URL;
     const callApi = () =>{
          var token = sessionStorage.tokenDetails;
           // Use Axios to make a call to the API
-          axios.get("/api/external", {
+          axios.get(`${url}/api/external`, {
           headers: {
           Authorization: `Bearer ${token}`    // send the access token through the 'Authorization' header
           }
@@ -48,6 +49,7 @@ export default {
   'Cheese': "Light Cheese"
 };
 
+       var url = process.env.VUE_APP_API_URL;
        var headers = {
          headers:{
           Authorization: `Bearer ${token}`,// send the access token through the 'Authorization' header          
@@ -56,7 +58,7 @@ export default {
           }};
 
           // Use Axios to make a call to the API
-          axios.post("/api/order",orderDetails, headers).then(function(data){ 
+          axios.post(`${url}/api/order`,orderDetails, headers).then(function(data){ 
            apiOrderMessage.value = "";           
            apiOrderMessage.value = data.data.msg; 
            if(data.data.msg == "Enable your email address")

@@ -30,6 +30,13 @@ const checkJwt = jwt({
 });
 
 router.post("/",checkJwt, (req, res) => {
+    res.setHeader('Access-Control-Allow-Credentials', true);
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT');
+    res.setHeader(
+      'Access-Control-Allow-Headers',
+      'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version'
+    );
     var emailverified = req.headers.emailverified;
     var user = req.headers.user;
     var authorizationHeader = req.headers.authorization;
@@ -59,7 +66,7 @@ router.post("/",checkJwt, (req, res) => {
           "user_metadata" : { "orders": orderId }
         };
   
-        axios.patch(requesturl,payload, headers).then(function(data){ 
+        axios.patch(requesturl,payload, headers).then(function(data){         
           res.send({
             msg: "Order placed and profile updated with metadata"
           });                                      
