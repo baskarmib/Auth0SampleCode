@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
-const external = require("./api/external");
-const order = require("./api/order");
+const external = require("./testapi/external");
+const order = require("./testapi/order");
 
 app.use(express.json({extended:false}));
 app.use("/api/external",external);
