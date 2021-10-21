@@ -22,7 +22,7 @@ export default {
     const apiMessage = ref("Token Not Validated");
     const apiOrderMessage = ref("");
     const validated = ref(false);
-    var url = process.env.VUE_APP_API_URL;
+    
     const callApi = () =>{
          var token = sessionStorage.tokenDetails;
           // Use Axios to make a call to the API
@@ -49,7 +49,7 @@ export default {
   'Cheese': "Light Cheese"
 };
 
-       var url = process.env.VUE_APP_API_URL;
+      
        var headers = {
          headers:{
           Authorization: `Bearer ${token}`,// send the access token through the 'Authorization' header          
