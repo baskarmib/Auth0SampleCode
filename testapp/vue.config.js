@@ -2,7 +2,7 @@ module.exports = {
     devServer: {
       proxy: {
         "/api": {
-          target: "http://localhost:3001"
+          target: "https://auth0-sample-code.vercel.app/"
         }
       }
     }
