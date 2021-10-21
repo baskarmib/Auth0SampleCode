@@ -3,7 +3,7 @@
     "version": "0.1.0",
     "private": true,
     "scripts": {
-        "api": "node server.js"
+        "api": "node index.js"
     },
     "dependencies": {
         "axios": "^0.23.0",
