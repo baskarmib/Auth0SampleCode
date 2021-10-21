@@ -2,9 +2,7 @@ const express = require("express");
 const jwt = require("express-jwt");
 const jwksRsa = require("jwks-rsa");
 const axios = require("axios");
-
-// Create a new Express app
-const app = express();
+const router = express.Router();
 
 // Set up Auth0 configuration. These values should be
 // the domain and audience for the API that you want to call.
@@ -31,14 +29,7 @@ const checkJwt = jwt({
   algorithms: ["RS256"]
 });
 
-// Define an endpoint that must be called with an access token
-app.get("/api/external", checkJwt, (req, res) => {
-  res.send({
-    msg: "Your Access Token was successfully validated!"
-  });
-});
-
-app.post("/api/order",checkJwt, (req, res) => {
+router.post("/",checkJwt, (req, res) => {
     var emailverified = req.headers.emailverified;
     var user = req.headers.user;
     var authorizationHeader = req.headers.authorization;
@@ -87,11 +78,4 @@ app.post("/api/order",checkJwt, (req, res) => {
     }    
 });
 
-function getToken()
-{
-
-
-}
-
-// Start the app
-app.listen(3001, () => console.log('API listening on 3001'));
+module.exports = router;
