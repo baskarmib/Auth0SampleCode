@@ -7,11 +7,11 @@ const router = express.Router();
 // Set up Auth0 configuration. These values should be
 // the domain and audience for the API that you want to call.
 const authConfig = {
-  domain: "testbskapi.auth0.com",
-  audience: "https://testapplicationapi.com",
-  managementapi: "https://testbskapi.auth0.com/api/v2/users/",
-  managementapiaudience: "https://testbskapi.auth0.com/api/v2/",
-  tokenapi: "https://testbskapi.auth0.com/oauth/token"
+  domain: "",
+  audience: "",
+  managementapi: "",
+  managementapiaudience: "",
+  tokenapi: ""
 };
 
 // Define middleware that validates incoming bearer tokens
